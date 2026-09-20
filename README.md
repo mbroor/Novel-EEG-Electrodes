@@ -1,6 +1,6 @@
 # Novel EEG Electrodes — Analysis Code
 
-Code accompanying the manuscript on 3D-printed EEG electrode attachments for Type 4 Afro-textured hairstyles.
+Code accompanying the manuscript on "Design and Test Novel EEG Electrode Attachments for Type 4 Afro-textured Hairstyles" 
 
 **Pipeline:** BrainVision EEG → MATLAB preprocess (EEGLAB) → PSD `.mat` files → Python FOOOF (aperiodic-corrected alpha, exponent, offset, walk noise floor).
 
