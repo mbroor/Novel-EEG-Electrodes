@@ -32,8 +32,8 @@ pip install numpy pandas scipy fooof
 | `channel_range_for_montage.m` | Cap = ch 1–16, Novel = 17–32 (Pilot005 swapped) |
 | `autoRejCh_func_CL.m` | Reject channels with SD > 3× median SD |
 | `compute_spectopo_psd.m` | Welch PSD via EEGLAB `spectopo` (linear power) |
-| `filelists/rest_recordings.csv` | Rest file list (pilot, folder, montage, vhdr) |
-| `filelists/walk_recordings.csv` | Walk file list |
+| `rest_recordings.csv` | Rest file list (pilot, folder, montage, vhdr)
+| `walk_recordings.csv`| Walk file list
 | `run_fooof_v2_devol_aligned.py` | FOOOF v2 fits + Cap vs Novel group stats |
 
 ## Before you run — edit local paths
