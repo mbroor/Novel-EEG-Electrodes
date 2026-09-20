@@ -7,8 +7,7 @@ setup_eeglab_paths;
 
 rawRoot = '/Users/mishtibroor/Desktop/LAB DATA/Data Collection /';  % trailing space required
 outRoot = '/Users/mishtibroor/Desktop/Preprocessed Data (matlab)/Phase1_clean';
-listCsv = fullfile(fileparts(mfilename('fullpath')), 'filelists', 'walk_recordings.csv');
-
+listCsv = fullfile(fileparts(mfilename('fullpath')), 'walk_recordings.csv');
 T = readtable(listCsv, 'TextType', 'string');
 nJobs = height(T);
 nOk = 0; nFail = 0;
