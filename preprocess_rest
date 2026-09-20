@@ -3,6 +3,10 @@
 % File list: matlab/filelists/rest_recordings.csv
 % Run from this folder or with this folder on the MATLAB path.
 
+%% Preprocess: resting EEG -> Spectopo PSD (.mat)
+% For each row in rest_recordings.csv:
+%   load Cap or Novel channels → filter/clean → 4 s epochs → PSD → save
+
 clear; clc; rng(1, 'twister');
 setup_eeglab_paths;
 
