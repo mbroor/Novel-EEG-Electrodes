@@ -1,11 +1,17 @@
-"""FOOOF v2 (DeVol/Liu). Outcomes: alpha peak (dB), exponent, offset, walk noise floor.
-Exclude negative aperiodic exponents only. n=18 (Pilot008 excluded)."""
+"""Fit FOOOF to each cleaned spectrum and compare Cap with Novel.
+Outcomes: alpha peak (dB), aperiodic exponent, aperiodic offset,
+and the walking 40-100 Hz noise floor.
+A fit is kept unless the aperiodic exponent is negative.
+Pilot008 is left out, so the tests use 18 participants.
+"""
 from pathlib import Path
 import numpy as np
 import pandas as pd
 import scipy.io as sio
 from scipy import stats
 from fooof import FOOOF
+
+# Change these two folders before running.
 
 ROOT = Path.home() / "Desktop" / "new_code_version_manuscript"
 SFN = Path.home() / "Desktop" / "Preprocessed Data (matlab)" / "Phase1_clean"
@@ -15,12 +21,15 @@ FREQ, ALPHA = [3, 40], [8, 13]
 
 
 def fit_channel(freqs, power):
+        """Fit one channel. Return None if the spectrum cannot be fit."""
     f = np.asarray(freqs, float).ravel()
     p = np.asarray(power, float).ravel()
     ok = np.isfinite(f) & np.isfinite(p) & (p > 0)
     f, p = f[ok], p[ok]
     if len(f) < 10:
         return None
+    # Settings used in the paper: straight 1/f, peak width 1-8 Hz, height at least 0.05, at most 3 peaks.
+
     fm = FOOOF(aperiodic_mode="fixed", peak_width_limits=[1, 8],
                min_peak_height=0.05, max_n_peaks=3, verbose=False)
     try:
@@ -33,12 +42,14 @@ def fit_channel(freqs, power):
         return {"excluded": True, "r2": r2, "offset": offset, "exponent": exponent}
     peaks = np.atleast_2d(fm.peak_params_) if fm.peak_params_.size else np.empty((0, 3))
     alpha = [pk for pk in peaks if ALPHA[0] <= pk[0] <= ALPHA[1]]
+    # Peak height times 10 is the power in dB. No alpha peak is recorded as 0 dB.
     snr = 10.0 * float(max(alpha, key=lambda pk: pk[1])[1]) if alpha else 0.0
     return {"excluded": False, "r2": r2, "offset": offset, "exponent": exponent,
             "snr_peak_db": snr}
 
 
 def noise_floor_40_100(freqs, psd_all):
+        """Mean log power from 40-100 Hz, skipping the 60 Hz line."""
     f = np.asarray(freqs, float).ravel()
     p = np.nanmean(np.atleast_2d(psd_all), axis=0)
     ok = np.isfinite(f) & np.isfinite(p) & (p > 0) & ~((f >= 58) & (f <= 62))
@@ -48,6 +59,7 @@ def noise_floor_40_100(freqs, psd_all):
 
 
 def paired_stats(cap, nov):
+        """Cap vs Novel across participants. Wilcoxon if the differences are non-normal, otherwise paired t."""
     d = pd.DataFrame({"cap": cap, "nov": nov}).dropna()
     if len(d) < 3:
         return None
@@ -71,6 +83,7 @@ def paired_stats(cap, nov):
 
 
 def report(label, pm, col):
+        """Print one Cap vs Novel result."""
     s = paired_stats(pm[pm.montage == "CAP"].set_index("pilot")[col],
                      pm[pm.montage == "NOVEL"].set_index("pilot")[col])
     if not s:
@@ -131,6 +144,7 @@ def main():
 
     metrics = ["snr_peak_db", "exponent_mean", "offset_mean", "r2_mean",
                "kwasa_noise_floor_40_100_db"]
+    # Average a person's resting recordings together, and their walking recordings together.
     pm = rec.groupby(["pilot", "condition", "montage"])[metrics].mean().reset_index()
     pm.to_csv(OUT / "v2_participant_means.csv", index=False)
 
