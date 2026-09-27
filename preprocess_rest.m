@@ -16,19 +16,19 @@ nJobs = height(T); % number of recordings are in the list
 nOk = 0; nFail = 0; 
 
 for i = 1:nJobs
-    pilotID  = char(T.pilotID(i)); 
-    dataDir  = fullfile(rawRoot, char(T.eeg_folder(i)));
-    montage  = char(T.montage(i));
-    vhdrFile = char(T.vhdr(i));
-    outDir   = fullfile(outRoot, pilotID);
-    if ~exist(outDir, 'dir'), mkdir(outDir); end
+    pilotID  = char(T.pilotID(i)); %participant
+    dataDir  = fullfile(rawRoot, char(T.eeg_folder(i))); % folder that holds the .vhdr file
+    montage  = char(T.montage(i)); % cap or novel
+    vhdrFile = char(T.vhdr(i)); % BrainVision header file
+    outDir   = fullfile(outRoot, pilotID); % save folder for this participant
+    if ~exist(outDir, 'dir'), mkdir(outDir); end 
 
     chRange = channel_range_for_montage(pilotID, montage);
     fprintf('[%d/%d] %s | %s | %s\n', i, nJobs, pilotID, montage, vhdrFile);
     try
-        outFile = preprocess_one_recording(dataDir, vhdrFile, chRange, outDir, pilotID, montage);
+        outFile = preprocess_one_recording(dataDir, vhdrFile, chRange, outDir, pilotID, montage); % filter, clean, cut into 4 s pieces, compute the spectrum 
         S = load(outFile, 'out');
-        fprintf('  OK %d ch\n', size(S.out.psd_all, 1));
+        fprintf('  OK %d ch\n', size(S.out.psd_all, 1)); % how many channels were kept
         nOk = nOk + 1;
     catch ME
         nFail = nFail + 1;
