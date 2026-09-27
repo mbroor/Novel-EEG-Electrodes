@@ -11,10 +11,9 @@ import scipy.io as sio
 from scipy import stats
 from fooof import FOOOF
 
-# Change these two folders before running.
-
-ROOT = Path.home() / "Desktop" / "new_code_version_manuscript"
-SFN = Path.home() / "Desktop" / "Preprocessed Data (matlab)" / "Phase1_clean"
+# Change these two folders before running. They will be different on every computer.
+ROOT = Path("/path/to/this_folder")  # where the result tables should be saved
+SFN = Path("/path/to/output_psd")    # folder of *_alphaSNR.mat files from the MATLAB scripts
 OUT = ROOT / "results" / "v2_devol_aligned"
 EXCLUDE = {"Pilot008"}
 FREQ, ALPHA = [3, 40], [8, 13]
