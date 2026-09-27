@@ -21,7 +21,7 @@ FREQ, ALPHA = [3, 40], [8, 13]
 
 
 def fit_channel(freqs, power):
-        """Fit one channel. Return None if the spectrum cannot be fit."""
+    """Fit one channel. Return None if the spectrum cannot be fit."""
     f = np.asarray(freqs, float).ravel()
     p = np.asarray(power, float).ravel()
     ok = np.isfinite(f) & np.isfinite(p) & (p > 0)
@@ -49,7 +49,7 @@ def fit_channel(freqs, power):
 
 
 def noise_floor_40_100(freqs, psd_all):
-        """Mean log power from 40-100 Hz, skipping the 60 Hz line."""
+    """Mean log power from 40-100 Hz, skipping the 60 Hz line."""
     f = np.asarray(freqs, float).ravel()
     p = np.nanmean(np.atleast_2d(psd_all), axis=0)
     ok = np.isfinite(f) & np.isfinite(p) & (p > 0) & ~((f >= 58) & (f <= 62))
@@ -59,7 +59,7 @@ def noise_floor_40_100(freqs, psd_all):
 
 
 def paired_stats(cap, nov):
-        """Cap vs Novel across participants. Wilcoxon if the differences are non-normal, otherwise paired t."""
+    """Cap vs Novel across participants. Wilcoxon if the differences are non-normal, otherwise paired t."""
     d = pd.DataFrame({"cap": cap, "nov": nov}).dropna()
     if len(d) < 3:
         return None
@@ -83,7 +83,7 @@ def paired_stats(cap, nov):
 
 
 def report(label, pm, col):
-        """Print one Cap vs Novel result."""
+    """Print one Cap vs Novel result."""
     s = paired_stats(pm[pm.montage == "CAP"].set_index("pilot")[col],
                      pm[pm.montage == "NOVEL"].set_index("pilot")[col])
     if not s:
