@@ -20,7 +20,8 @@ This repository contains analysis scripts only. Raw EEG and large preprocessed .
 - `numpy`, `pandas`, `scipy`, `fooof`
 
 ```bash
-pip install numpy pandas scipy fooof```
+pip install numpy pandas scipy fooof
+```
 
 ## Repository contents
 
@@ -34,7 +35,7 @@ pip install numpy pandas scipy fooof```
 | `autoRejCh_func_CL.m` | Reject channels with SD > 3× median SD |
 | `compute_spectopo_psd.m` | Welch PSD via EEGLAB `spectopo` (linear power) |
 | `rest_recordings.csv` | Rest file list (pilot, folder, montage, vhdr) |
-| `walk_recordings.csv`| Walk file list` |
+| `walk_recordings.csv` | Walk file list |
 | `run_fooof_v2_devol_aligned.py` | FOOOF v2 fits + Cap vs Novel group stats |
 
 ## Before you run — edit local paths
