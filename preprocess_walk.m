@@ -1,5 +1,5 @@
 %% Walking EEG: turn each raw recording into a power spectrum (.mat)
-% Each row of rest_recordings.csv is one recording
+% Each row of walk_recordings.csv is one recording
 % Cap = ch 1:16, Novel 17:32 (Pilot005 swapped). Reference stays CPz.
 
 clear; clc; rng(1, 'twister'); % start clean, lock the random seed so reruns match
