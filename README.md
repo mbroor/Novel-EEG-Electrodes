@@ -1,32 +1,33 @@
 # Novel EEG Electrodes
 
-Code accompanying the manuscript on "Design and Test Novel EEG Electrode Attachments for Type 4 Afro-textured Hairstyles"
+Code accompanying the manuscript on "Design and Test Novel EEG Electrode Attachments for Type 4 Afro-textured Hairstyles."
 
-**Pipeline:** BrainVision EEG → MATLAB preprocess (EEGLAB) → PSD `.mat` files → Python FOOOF (aperiodic-corrected alpha, exponent, offset, walk noise floor).
+Pipeline: BrainVision EEG → MATLAB preprocess (EEGLAB) → PSD .mat files → Python FOOOF (aperiodic-corrected alpha, exponent, offset, walk noise floor).
 
-This repository contains analysis scripts only. Raw EEG and large preprocessed `.mat` files are not included.
+This repository contains analysis scripts only. Raw EEG and large preprocessed .mat files are not included.
 
 ## Requirements
 
 ### MATLAB preprocess
+
 - MATLAB (tested with R2025b)
-- [EEGLAB](https://eeglab.org/) with plugins: **CleanLine**, **clean_rawdata** / ASR tools as used by `pop_clean_rawdata`
+- EEGLAB with plugins: CleanLine, clean_rawdata / ASR tools as used by `pop_clean_rawdata`
 - BrainVision loader (`pop_loadbv`)
 
 ### Python FOOOF
+
 - Python 3
 - `numpy`, `pandas`, `scipy`, `fooof`
 
 ```bash
-pip install numpy pandas scipy fooof
-```
+pip install numpy pandas scipy fooof``
 
 ## Repository contents
 
 | File | Role |
 |------|------|
-| `batch_preprocess_rest_phase1.m` | Batch rest recordings → PSD mats |
-| `batch_preprocess_walk_phase1.m` | Batch walk recordings → PSD mats |
+| `preprocess_rest.m` | Batch rest recordings → PSD mats |
+| `preprocess_walk.m` | Batch walk recordings → PSD mats |
 | `preprocess_one_recording.m` | Core preprocess for one `.vhdr` file |
 | `setup_eeglab_paths.m` | Add EEGLAB to the MATLAB path |
 | `channel_range_for_montage.m` | Cap = ch 1–16, Novel = 17–32 (Pilot005 swapped) |
@@ -40,7 +41,7 @@ pip install numpy pandas scipy fooof
 
 Scripts currently point to local folders. Change these to your machine:
 
-**MATLAB** (`batch_preprocess_rest_phase1.m` and `batch_preprocess_walk_phase1.m`):
+**MATLAB** (`preprocess_rest.m` and `preprocess_walk.m`):
 - `rawRoot` — folder with raw BrainVision data
 - `outRoot` — folder for `*_alphaSNR.mat` outputs
 
@@ -57,8 +58,8 @@ Scripts currently point to local folders. Change these to your machine:
 
 ```matlab
 cd('.../EEG Novel Electrodes Code')   % this folder
-batch_preprocess_rest_phase1
-batch_preprocess_walk_phase1
+preprocess_rest
+preprocess_walk
 ```
 
 **Pipeline per recording (same for rest and walk):**
