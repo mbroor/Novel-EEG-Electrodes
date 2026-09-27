@@ -1,25 +1,22 @@
-%% Rest preprocess + spectopo PSD (cleaned). Same analysis as manuscript freeze.
-% Cap=1:16, Novel=17:32 (Pilot005 flipped). No average re-ref (CPz).
-% File list: matlab/filelists/rest_recordings.csv
-% Run from this folder or with this folder on the MATLAB path.
+%% Resting EEG -> turn each raw recording into a power spectrum.
+% Each row of rest_recordings.csv is one recording
+% Cap = ch 1:16, Novel 17:32 (Pilot005 swapped). Reference stays CPz.
 
-%% Preprocess: resting EEG -> Spectopo PSD (.mat)
-% For each row in rest_recordings.csv:
-%   load Cap or Novel channels → filter/clean → 4 s epochs → PSD → save
+clear; clc; rng(1, 'twister'); % start clean; lock the random seed so reruns match
+setup_eeglab_paths; 
 
-clear; clc; rng(1, 'twister');
-setup_eeglab_paths;
 
-rawRoot = '/Users/mishtibroor/Desktop/LAB DATA/Data Collection /';  % trailing space required
-outRoot = '/Users/mishtibroor/Desktop/Preprocessed Data (matlab)/Phase1_clean';
-listCsv = fullfile(fileparts(mfilename('fullpath')), 'rest_recordings.csv');
+% Change these two folders before running. They will be different on every computer.
+rawRoot = '/path/to/raw_brainvision_data';  % folder that contains the original .vhdr recordings
+outRoot = '/path/to/output_psd';            % folder where the spectrum .mat files should be saved
+listCsv = fullfile(fileparts(mfilename('fullpath')), 'rest_recordings.csv');  % file list kept next to this script
 
 T = readtable(listCsv, 'TextType', 'string');
-nJobs = height(T);
-nOk = 0; nFail = 0;
+nJobs = height(T); % number of recordings are in the list
+nOk = 0; nFail = 0; 
 
 for i = 1:nJobs
-    pilotID  = char(T.pilotID(i));
+    pilotID  = char(T.pilotID(i)); 
     dataDir  = fullfile(rawRoot, char(T.eeg_folder(i)));
     montage  = char(T.montage(i));
     vhdrFile = char(T.vhdr(i));
