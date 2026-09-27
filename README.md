@@ -20,7 +20,7 @@ This repository contains analysis scripts only. Raw EEG and large preprocessed .
 - `numpy`, `pandas`, `scipy`, `fooof`
 
 ```bash
-pip install numpy pandas scipy fooof``
+pip install numpy pandas scipy fooof```
 
 ## Repository contents
 
@@ -33,13 +33,13 @@ pip install numpy pandas scipy fooof``
 | `channel_range_for_montage.m` | Cap = ch 1–16, Novel = 17–32 (Pilot005 swapped) |
 | `autoRejCh_func_CL.m` | Reject channels with SD > 3× median SD |
 | `compute_spectopo_psd.m` | Welch PSD via EEGLAB `spectopo` (linear power) |
-| `rest_recordings.csv` | Rest file list (pilot, folder, montage, vhdr)
-| `walk_recordings.csv`| Walk file list
+| `rest_recordings.csv` | Rest file list (pilot, folder, montage, vhdr) |
+| `walk_recordings.csv`| Walk file list` |
 | `run_fooof_v2_devol_aligned.py` | FOOOF v2 fits + Cap vs Novel group stats |
 
 ## Before you run — edit local paths
 
-Scripts currently point to local folders. Change these to your machine:
+The scripts use placeholder folders.
 
 **MATLAB** (`preprocess_rest.m` and `preprocess_walk.m`):
 - `rawRoot` — folder with raw BrainVision data
