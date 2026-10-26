@@ -4,7 +4,7 @@ Code accompanying the manuscript on "Design and Test Novel EEG Electrode Attachm
 
 Pipeline: BrainVision EEG → MATLAB preprocess (EEGLAB) → PSD .mat files → Python FOOOF (aperiodic-corrected alpha, exponent, offset, walk noise floor).
 
-This repository contains analysis scripts only. Raw EEG and large preprocessed .mat files are not included.
+This repository contains the MATLAB and Python analysis scripts, as well as the 3D-printable STL files for the novel EEG electrode attachments developed in this study. Raw EEG and large preprocessed .mat files are not included.
 
 ## Requirements
 
@@ -37,6 +37,12 @@ pip install numpy pandas scipy fooof
 | `rest_recordings.csv` | Rest file list (pilot, folder, montage, vhdr) |
 | `walk_recordings.csv` | Walk file list |
 | `run_fooof_v2_devol_aligned.py` | FOOOF v2 fits + Cap vs Novel group stats |
+
+## Electrode Design Files
+
+The STL FILES.zip archive contains the 3D-printable STL files for the novel EEG electrode attachments developed and evaluated in this study.
+
+These files are provided to support reproducibility and further development of EEG electrode designs for Type 4 Afro-textured hairstyles.
 
 ## Before you run — edit local paths
 
